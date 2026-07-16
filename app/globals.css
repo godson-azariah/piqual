@@ -1,0 +1,906 @@
+@import "tailwindcss";
+
+/* --- Base reset matching original --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #334155;
+  background-color: #ffffff;
+  overflow-x: hidden;
+}
+
+a {
+  color: #08287b;
+  text-decoration: none;
+}
+
+/* --- Mobile off-canvas overlay --- */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-menu-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* --- Mobile off-canvas panel --- */
+.mobile-menu-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  z-index: 9999;
+  transform: translateX(100%);
+  transition: transform 0.35s ease-in-out;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobile-menu-panel.open {
+  transform: translateX(0);
+}
+
+/* Navbar fade-in after slide-up (shrunk sticky state) */
+@keyframes navFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* --- Homepage hero --- */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  margin-top: 81px;
+  padding: 60px 0 74px;
+  background-image: url("/hero-bg.webp");
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: #000000;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  max-width: 1310px;
+  margin: 0 auto;
+  padding: 0 0 0 10px;
+}
+
+.hero-copy {
+  width: 62%;
+  padding: 0;
+}
+
+.hero-visual {
+  width: 38%;
+}
+
+.hero-kicker {
+  margin: 0 0 30px;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.hero-title {
+  max-width: 815px;
+  margin: 0 0 28px;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: #ffffff;
+}
+
+.hero-title span {
+  color: #f3687d;
+}
+
+.hero-description {
+  max-width: 760px;
+  margin: 0;
+  padding-right: 7%;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #ffffff;
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.hero-main-image {
+  width: 90%;
+  height: auto;
+  display: block;
+}
+
+.hero-scroll {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 36px;
+  margin: 40px auto 0;
+  line-height: 0;
+}
+
+.hero-scroll-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: brightness(0%) contrast(0%) saturate(100%) blur(0) hue-rotate(0deg);
+}
+
+.hero-wave {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  height: 60px;
+  pointer-events: none;
+}
+
+.hero-wave svg {
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 60px;
+  transform: scale(-1, -1);
+  transform-origin: center;
+}
+
+.hero-wave .wave-fill {
+  fill: #628fda85;
+}
+
+/* --- Sales journey cards section --- */
+.journey-section {
+  position: relative;
+  overflow: hidden;
+  padding: 50px 0 65px;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)),
+    url("/next-section-bg.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.journey-overlay {
+  display: none;
+}
+
+.journey-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 10px 50px 10px 10px;
+  text-align: center;
+}
+
+.journey-heading {
+  margin: 0 0 15px;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 55px;
+  letter-spacing: 0;
+  color: #000000;
+}
+
+.journey-intro {
+  margin: 0;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.65;
+  color: #000000;
+}
+
+.journey-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-top: 30px;
+}
+
+.journey-card {
+  position: relative;
+  min-height: 100%;
+  margin: 0 15px;
+  overflow: hidden;
+  text-align: left;
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 30px;
+  box-shadow: 0 6px 41px 1px rgba(255, 255, 255, 0.43);
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease,
+    background 0.3s,
+    border 0.3s,
+    border-radius 0.3s;
+}
+
+.journey-card-standard {
+  padding: 25px;
+}
+
+.journey-card-tight {
+  padding: 25px 10px 25px 25px;
+}
+
+@media (min-width: 768px) {
+  .journey-card:hover {
+    transform: translateY(-10px) scale(1.03);
+  }
+}
+
+.journey-card:hover {
+  background-color: #ffffff;
+  border-color: #564ed5;
+}
+
+.journey-card-decoration {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 144px;
+  height: 144px;
+  pointer-events: none;
+}
+
+.journey-card-title-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.journey-card-icon {
+  flex: 0 0 auto;
+  height: auto;
+}
+
+.journey-card-icon-large {
+  width: 10%;
+}
+
+.journey-card-icon-small {
+  width: 8%;
+}
+
+.journey-card-icon-medium {
+  width: 9%;
+}
+
+.journey-card-title-row h3 {
+  margin: 0;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: #00bc53;
+}
+
+.journey-card-description {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.65;
+  color: #4b5563;
+}
+
+.journey-card-list {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.journey-card-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.65;
+  color: #4b5563;
+}
+
+.journey-check-wrap {
+  display: inline-flex;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  margin-top: 4px;
+}
+
+.journey-check {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: #00bc53;
+  transition: fill 0.3s;
+}
+
+.journey-scroll {
+  display: block;
+  width: 36px;
+  margin: 40px auto 0;
+  line-height: 0;
+}
+
+.journey-scroll-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: brightness(0%) contrast(0%) saturate(100%) blur(0) hue-rotate(0deg);
+}
+
+.journey-wave {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  height: 35px;
+  pointer-events: none;
+}
+
+.journey-wave svg {
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 35px;
+}
+
+.journey-wave .wave-fill {
+  fill: #ffffff;
+}
+
+.features-section {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.features-section::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(226, 232, 240, 0.28) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 232, 240, 0.28) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.features-section-content {
+  position: relative;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 50px 10px;
+  text-align: center;
+}
+
+.features-heading,
+.features-modules-heading {
+  margin: 0;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  color: #000000;
+}
+
+.features-heading {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 55px;
+}
+
+.features-intro {
+  margin: 0;
+  padding: 0 5%;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.features-visual {
+  display: block;
+  width: 70%;
+  height: auto;
+  margin: 20px auto 0;
+}
+
+.features-modules-heading {
+  margin-top: 30px;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 55px;
+}
+
+.features-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  padding: 30px 12px 0;
+  text-align: left;
+}
+
+.features-card {
+  min-height: 100%;
+  padding: 38px 30px;
+  color: #ffffff;
+  background: linear-gradient(87deg, #1b3d9a 0%, #564ed5 100%);
+  border: 2px solid #ffffff;
+  border-radius: 30px;
+  box-shadow: 0 6px 41px 1px rgba(212, 212, 212, 0.43);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.features-card:hover {
+  border-color: #564ed5;
+  box-shadow: 0 0 45px 3px rgba(86, 78, 213, 0.29);
+}
+
+.features-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 23px;
+}
+
+.features-card-title img {
+  width: 10%;
+  height: auto;
+}
+
+.features-card h4 {
+  margin: 0;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.features-card p {
+  margin: 0;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.8;
+}
+
+.features-demo-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 30px;
+  padding: 11px 21px;
+  font-family: var(--font-urbanist), "Urbanist", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  color: #ffffff;
+  background: #00bc53;
+  border-radius: 999px;
+}
+
+.features-demo-button span {
+  font-size: 22px;
+  line-height: 12px;
+}
+
+/* --- Sales motion section --- */
+.sales-motion-section { position: relative; overflow: hidden; padding: 80px 15px 60px; background: radial-gradient(circle at 45% 20%, #deebff 0, rgba(222, 235, 255, 0) 38%), linear-gradient(115deg, #a9c7f3, #c2d8f7 55%, #a8c6f0); }
+.sales-motion-divider { position: absolute; top: 0; left: 0; width: 100%; height: 35px; pointer-events: none; z-index: 0; }
+.sales-motion-divider svg { display: block; width: calc(100% + 1.3px); height: 35px; }
+.sales-motion-divider .wave-fill { fill: #ffffff !important; }
+.sales-motion-content { position: relative; max-width: 1135px; margin: 0 auto; }
+.sales-motion-content > h2 { margin: 0 0 42px; text-align: center; font-family: var(--font-urbanist), "Urbanist", sans-serif; font-size: 38px; font-weight: 700; line-height: 1.2; color: #000; }
+.motion-card { position: relative; display: grid; grid-template-columns: 40% 60%; column-gap: 32px; align-items: center; margin: 0 0 54px; padding: 24px 28px; background: #fff; border-radius: 15px; }
+.motion-card-team { grid-template-columns: 60% 40%; padding: 24px 28px; }
+.motion-image { display: flex; align-items: center; justify-content: center; padding: 8px 0 8px 4px; text-align: center; line-height: 0; }
+.motion-card-leaders .motion-image { justify-content: flex-start; }
+.motion-card-team .motion-image { justify-content: flex-end; }
+.motion-image img { display: block; width: 72%; max-width: 260px; height: auto; margin: 0; }
+.motion-copy { position: static; padding: 12px 6px 16px 0; font-family: var(--font-urbanist), "Urbanist", sans-serif; color: #4b5563; }
+.motion-card-team .motion-copy { padding: 12px 0 16px 6px; }
+.motion-copy h3 { margin: 0 0 10px; font-size: 22px; font-weight: 700; color: #000; }
+.motion-copy p { margin: 0; font-size: 18px; font-weight: 600; line-height: 1.75; }
+.motion-quote { position: absolute; top: -27px; width: 54px; height: 54px; padding-top: 2px; border-radius: 50%; background: #564ed5; color: #fff; font-family: Arial, sans-serif; font-size: 58px; font-weight: 900; line-height: 58px; text-align: center; }
+.motion-quote-right { right: 28px; }
+.motion-quote-left { left: 28px; }
+.motion-counters { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 24px; padding: 12px 6px; border: 1px solid #c8d3de; border-radius: 10px; background: linear-gradient(90deg, rgba(37, 99, 235, 0.12), rgba(147, 51, 234, 0.12)); }
+.motion-counter { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.motion-counter strong { font-family: var(--font-inter), "Inter", sans-serif; font-size: 30px; font-weight: 700; line-height: 1.15; color: #000000; }
+.motion-counter span { margin-top: 6px; font-size: 12px; font-weight: 500; line-height: 1.3; }
+
+@media (max-width: 1024px) {
+  .sales-motion-section {
+    padding: 80px 15px 60px;
+  }
+
+  .sales-motion-content > h2 {
+    margin-bottom: 38px;
+  }
+
+  .motion-card,
+  .motion-card-team {
+    margin-bottom: 46px;
+    padding: 22px 24px;
+  }
+
+  .motion-image {
+    padding: 6px 0 6px 2px;
+  }
+
+  .motion-copy {
+    padding: 12px 0 18px;
+  }
+
+  .motion-counters {
+    margin-top: 22px;
+    padding: 10px 6px;
+  }
+
+  .motion-counter strong {
+    font-size: 28px;
+  }
+
+  .motion-counter span {
+    font-size: 11px;
+  }
+
+  .hero-section {
+    margin-top: 64px;
+    height: auto;
+    padding: 0 10px 0;
+  }
+
+  .hero-content {
+    max-width: 767px;
+    flex-direction: column;
+    padding: 20px 15px 0;
+  }
+
+  .hero-copy,
+  .hero-visual {
+    width: 100%;
+  }
+
+  .hero-copy {
+    text-align: center;
+  }
+
+  .hero-kicker {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    max-width: none;
+    font-size: 45px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+
+  .hero-description {
+    max-width: none;
+    padding: 0 5%;
+    text-align: center;
+  }
+
+  .hero-visual {
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .hero-main-image {
+    width: 100%;
+  }
+
+  .hero-scroll {
+    display: none;
+  }
+
+  .journey-section {
+    padding: 50px 15px;
+  }
+
+  .journey-content {
+    padding: 10px;
+  }
+
+  .journey-heading {
+    font-size: 35px;
+    line-height: 1.2;
+  }
+
+  .journey-intro {
+    padding: 0 5px;
+  }
+
+  .journey-cards {
+    padding-top: 20px;
+  }
+
+  .features-visual {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .sales-motion-section {
+    padding: 70px 15px 50px;
+  }
+
+  .sales-motion-content > h2 {
+    margin-bottom: 30px;
+    font-size: 30px;
+  }
+
+  .motion-card,
+  .motion-card-team {
+    margin-bottom: 32px;
+    padding: 18px 14px;
+  }
+
+  .motion-image {
+    padding: 6px 0 6px 2px;
+  }
+
+  .motion-copy {
+    padding: 10px 4px 0;
+  }
+
+  .motion-copy h3 {
+    margin-bottom: 6px;
+  }
+
+  .motion-copy p {
+    line-height: 1.7;
+  }
+
+  .motion-counters {
+    margin-top: 18px;
+    padding: 10px 0;
+  }
+
+  .motion-quote {
+    top: -46px;
+    width: 46px;
+    height: 46px;
+    font-size: 48px;
+    line-height: 48px;
+  }
+
+  .hero-section {
+    margin-top: 68px;
+    padding: 0 15px 0;
+  }
+
+  .hero-content {
+    padding: 20px 0 0;
+  }
+
+  .hero-description {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .hero-wave {
+    height: 35px;
+  }
+
+  .hero-wave svg {
+    height: 35px;
+  }
+
+  .journey-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .journey-card {
+    margin: 0;
+  }
+
+  .journey-card-tight {
+    margin: 20px 0;
+  }
+
+  .journey-card-title-row h3 {
+    font-size: 20px;
+  }
+
+  .journey-card-icon-large,
+  .journey-card-icon-medium {
+    width: 11%;
+  }
+
+  .journey-card-icon-small {
+    width: 9%;
+  }
+
+  .journey-scroll {
+    display: none;
+  }
+
+  .features-section-content {
+    padding: 50px 15px;
+  }
+
+  .features-heading,
+  .features-modules-heading {
+    font-size: 35px;
+    line-height: 1.2;
+  }
+
+  .features-visual {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .features-modules-heading {
+    margin-top: 30px;
+  }
+
+  .features-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 10px;
+  }
+
+  .features-card {
+    padding: 38px 30px;
+  }
+
+  .features-card-title {
+    margin-bottom: 20px;
+  }
+
+  .features-card-title img {
+    width: 12%;
+  }
+
+  .features-card h4 {
+    font-size: 20px;
+  }
+
+  .sales-motion-section {
+    padding: 80px 15px 50px;
+  }
+
+  .sales-motion-content > h2 {
+    margin-bottom: 30px;
+    font-size: 35px;
+  }
+
+  .motion-card,
+  .motion-card-team {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .motion-card-leaders .motion-image {
+    order: 2;
+  }
+
+  .motion-card-team .motion-image {
+    order: 2;
+  }
+
+  .motion-image img {
+    width: 65%;
+  }
+
+  .motion-copy {
+    padding: 25px 0 0;
+    text-align: center;
+  }
+
+  .motion-copy h3 {
+    font-size: 20px;
+  }
+
+  .motion-copy p {
+    font-size: 16px;
+  }
+
+  .motion-quote {
+    top: -23px;
+    width: 46px;
+    height: 46px;
+    font-size: 49px;
+    line-height: 56px;
+  }
+
+  .motion-quote-right { right: 28px; left: auto; }
+  .motion-quote-left { right: auto; left: 28px; }
+
+  .motion-counters {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .motion-counter {
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .motion-counter strong {
+    font-size: 21px;
+  }
+
+  .motion-counter span {
+    margin-top: 0;
+    font-size: 12px;
+  }
+}
+
+/* Original desktop proportions for the Sales Motion section. */
+@media (min-width: 1025px) {
+  .motion-card { column-gap: 0; margin: 0; padding: 40px 50px 40px 0; }
+  .motion-card-team { margin-top: 100px; padding: 40px 50px; }
+  .motion-image { padding: 0; }
+  .motion-image img { width: 73%; max-width: none; }
+  .motion-copy, .motion-card-team .motion-copy { padding: 0; }
+  .motion-counter strong { font-size: 35px; line-height: 1; background: none; color: #1c1b1f; }
+  .motion-counter span { margin-top: 10px; font-family: var(--font-inter), "Inter", sans-serif; font-size: 15px; font-weight: 400; line-height: 1.5; color: #1c1b1f; }
+}
