@@ -98,7 +98,7 @@ export default function FeaturesSection() {
         });
         cell.addEventListener("mouseenter", () => {
           cell.style.borderWidth = "0.9px";
-          cell.style.borderColor = "rgba(64, 64, 64, 0.0875)";
+          cell.style.borderColor = "rgba(64, 64, 64, 0.109375)";
         });
         cell.addEventListener("mouseleave", () => {
           cell.style.borderWidth = "0.6px";
@@ -167,6 +167,28 @@ export default function FeaturesSection() {
           animation-iteration-count: 1, infinite;
           animation-fill-mode: forwards;
           animation-direction: normal, alternate;
+        }
+
+        /* Breathing room between stacked elements, responsive across all
+           viewport widths via clamp() (desktop and mobile both get more
+           space now). Card-to-card gap inside .features-cards is untouched. */
+        .features-heading {
+          margin-bottom: clamp(18px, 3vw, 24px);
+        }
+        .features-intro {
+          margin-bottom: clamp(30px, 6vw, 42px);
+        }
+        .features-visual {
+          margin-top: clamp(30px, 6vw, 42px);
+          margin-bottom: clamp(30px, 6vw, 42px);
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .features-modules-heading {
+          margin-top: clamp(34px, 7vw, 50px);
+        }
+        .features-cards {
+          margin-top: clamp(26px, 5vw, 36px);
         }
       `}</style>
       <div className="features-section-content">
