@@ -124,6 +124,10 @@ export default function Footer() {
             grid-template-columns: 1fr;
             text-align: center;
           }
+          .footer-logo {
+            display: flex;
+            justify-content: center;
+          }
           .footer-nav {
             flex-wrap: wrap;          /* allow links to wrap into multiple lines */
             justify-content: center;
@@ -152,7 +156,7 @@ export default function Footer() {
         <ul className="footer-nav">
           {navLinks.map((link) => (
             <li key={link.label}>
-              <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined}>
+              <a href="#" onClick={(e) => e.preventDefault()}>
                 {link.label}
               </a>
             </li>
