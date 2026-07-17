@@ -3,9 +3,21 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-type CounterProps = { value: number; suffix: string; label: string };
+type CounterProps = { value: number; suffix: string; label: string; isMobile: boolean };
 
-function Counter({ value, suffix, label }: CounterProps) {
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return isMobile;
+}
+
+function Counter({ value, suffix, label, isMobile }: CounterProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [count, setCount] = useState(0);
 
@@ -27,15 +39,51 @@ function Counter({ value, suffix, label }: CounterProps) {
     return () => observer.disconnect();
   }, [value]);
 
-  return <div className="motion-counter" ref={ref}><strong>{count}{suffix}</strong><span>{label}</span></div>;
+  return (
+    <div
+      className="motion-counter"
+      ref={ref}
+      style={isMobile ? {
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+        gap: "8px",
+      } : undefined}
+    >
+      <strong style={isMobile ? { fontSize: "52px", lineHeight: 1 } : undefined}>{count}{suffix}</strong>
+      <span style={isMobile ? { marginTop: 0, fontSize: "14px" } : undefined}>{label}</span>
+    </div>
+  );
 }
 
 const leaderCounters = [[6, "x", "More B2B Leads"], [7, "x", "Better Team Alignment"], [90, "%", "Pipeline Influenced"]] as const;
 const teamCounters = [[6, "x", "More Replies"], [90, "%", "Better Personalization"], [8, "x", "Targets Achieved"]] as const;
 
 export default function SalesMotion() {
+  const isMobile = useIsMobile();
+  const countersStyle = isMobile ? {
+    display: "flex" as const,
+    flexDirection: "column" as const,
+    gap: "36px",
+    padding: "36px 20px",
+  } : undefined;
+
   return (
     <section className="sales-motion-section">
+      <style jsx>{`
+        /* Fix the quotation-mark badge centering (both desktop and mobile).
+           The global rule leans on line-height/padding-top as a centering
+           hack, which puts the glyph off-center; flex centering fixes it
+           for every breakpoint in one rule. */
+        .motion-quote {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding-top: 0;
+          line-height: 1;
+        }
+      `}</style>
       <div className="sales-motion-divider" aria-hidden="true">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -56,10 +104,24 @@ export default function SalesMotion() {
         <h2>Designed to Match Your Sales Motion</h2>
         <div className="motion-card motion-card-leaders">
           <div className="motion-image"><Image src="/sales-leaders.png" alt="Sales leader" width={1200} height={1200} /></div>
-          <div className="motion-copy"><div className="motion-quote motion-quote-right">&rdquo;</div><h3>Designed for Sales Leaders</h3><p>Piqual helps sales leaders build a clear sales plan based on market position, set targets, align teams, and track outreach performance to consistently generate high quality B2B leads.</p><div className="motion-counters">{leaderCounters.map(([value, suffix, label]) => <Counter key={label} value={value} suffix={suffix} label={label} />)}</div></div>
+          <div className="motion-copy">
+            <div className="motion-quote motion-quote-right">&rdquo;</div>
+            <h3>Designed for Sales Leaders</h3>
+            <p>Piqual helps sales leaders build a clear sales plan based on market position, set targets, align teams, and track outreach performance to consistently generate high quality B2B leads.</p>
+            <div className="motion-counters" style={countersStyle}>
+              {leaderCounters.map(([value, suffix, label]) => <Counter key={label} value={value} suffix={suffix} label={label} isMobile={isMobile} />)}
+            </div>
+          </div>
         </div>
         <div className="motion-card motion-card-team">
-          <div className="motion-copy"><div className="motion-quote motion-quote-left">&ldquo;</div><h3>Designed for Sales Team</h3><p>Piqual powers sales teams run focused campaigns aligned to buyer pain and value, using AI-driven market intelligence to deliver personalized multi-channel sequences to the right contacts.</p><div className="motion-counters">{teamCounters.map(([value, suffix, label]) => <Counter key={label} value={value} suffix={suffix} label={label} />)}</div></div>
+          <div className="motion-copy">
+            <div className="motion-quote motion-quote-left">&ldquo;</div>
+            <h3>Designed for Sales Team</h3>
+            <p>Piqual powers sales teams run focused campaigns aligned to buyer pain and value, using AI-driven market intelligence to deliver personalized multi-channel sequences to the right contacts.</p>
+            <div className="motion-counters" style={countersStyle}>
+              {teamCounters.map(([value, suffix, label]) => <Counter key={label} value={value} suffix={suffix} label={label} isMobile={isMobile} />)}
+            </div>
+          </div>
           <div className="motion-image"><Image src="/sales-team.png" alt="Sales team" width={1200} height={1200} /></div>
         </div>
       </div>
