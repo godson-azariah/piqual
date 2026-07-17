@@ -174,7 +174,13 @@ export default function ContactCTA() {
         @media (max-width: 767px) {
           .contact-inner { flex-direction: column; padding: 30px 20px; }
           .contact-copy { flex: none; width: 100%; padding-right: 0; align-items: center; }
-          .contact-image-wrap { display: none; }
+          .contact-image-wrap {
+            display: flex;
+            flex: none;
+            width: 100%;
+            justify-content: center;
+            margin-top: 30px;
+          }
         }
       `}</style>
 
