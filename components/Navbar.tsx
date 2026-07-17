@@ -5,12 +5,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const navLinks = [
-  { label: 'Product', href: 'https://www.piqual.com/product/' },
-  { label: 'Pricing', href: 'https://www.piqual.com/pricing/' },
-  { label: 'About', href: 'https://www.piqual.com/about/' },
-  { label: 'Testimonials', href: 'https://www.piqual.com/testimonials/' },
-  { label: 'Careers', href: 'https://www.piqual.com/careers/' },
-  { label: 'Login', href: 'https://app.piqual.ai/' },
+  { label: 'Product', href: '' },
+  { label: 'Pricing', href: '' },
+  { label: 'About', href: '' },
+  { label: 'Testimonials', href: '' },
+  { label: 'Careers', href: '' },
+  { label: 'Login', href: '' },
 ];
 
 const mobileNavLinks = navLinks.filter((link) => link.label !== 'Login');
@@ -115,7 +115,7 @@ export default function Navbar() {
 
           <div className="flex items-center justify-end" style={{ width: '16%' }}>
             <a
-              href="https://www.piqual.com/contact/"
+              href=""
               style={{
                 fontFamily: 'var(--font-urbanist), "Urbanist", sans-serif',
                 fontSize: '17px',
@@ -290,7 +290,7 @@ export default function Navbar() {
 
           <li className="w-full" style={{ textAlign: 'center', marginTop: '15px' }}>
             <a
-              href="https://www.piqual.com/contact/"
+              href=""
               onClick={() => setMobileOpen(false)}
               style={{
                 display: 'block',
