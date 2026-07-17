@@ -163,7 +163,7 @@ export default function Navbar() {
                 width={750}
                 height={364}
                 priority
-                style={{ width: '27%', height: 'auto' }}
+                style={{ width: 'auto', height: '44px' }}
               />
             </Link>
           </div>
@@ -256,9 +256,11 @@ export default function Navbar() {
           style={{
             padding: 0,
             margin: 0,
+            flex: '1 1 auto',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           {mobileNavLinks.map((link) => (
@@ -276,7 +278,7 @@ export default function Navbar() {
                   backgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   color: 'transparent',
-                  margin: '18px 30px 0px 30px',
+                  margin: '26px 30px 0px 30px',
                   textAlign: 'center',
                   padding: '0',
                 }}
@@ -330,10 +332,6 @@ export default function Navbar() {
             >
               An AI product Built for B2B Lead Generation
             </a>
-          </li>
-
-          <li className="w-full flex justify-center" style={{ marginTop: '15px' }}>
-            <div style={{ width: '100%', height: '20px' }} />
           </li>
         </ul>
       </div>
